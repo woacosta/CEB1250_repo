@@ -1,0 +1,339 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red255\green255\blue255;
+\red180\green36\blue25;\red200\green20\blue201;\red159\green160\blue28;\red47\green180\blue29;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\csgray\c0;\csgray\c100000;
+\cssrgb\c76409\c21698\c12524;\cssrgb\c83396\c23075\c82664;\cssrgb\c68468\c68012\c14208;\cssrgb\c20238\c73898\c14947;}
+\margl1440\margr1440\vieww20220\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+MongoDB\
+First time - docker-compose up -d\
+Second time - docker-compose restart\
+\
+Open a browser and type \'93localhost:8081\'94 to validate if your mongo-express instance is up and running
+\f1\fs22 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\
+docker exec -it mongo /bin/bash\
+\
+mongoimport --jsonArray -u root -p 'example' --authenticationDatabase admin -d movies -c american_movies /opt/mongo/movies.json\
+\
+mongo -u root -p 'example' --authenticationDatabase admin\
+\
+\
+Cassandra\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 docker-compose restart\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 docker exec -it cassandra /bin/bash\
+Start with cqlsh\
+\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Create DB cycling\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 CREATE TABLE cycling.rank_by_year_and_name (cyclist_name text PRIMARY KEY, race_name text, race_year int, rank int);\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Insert one new row\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 insert into cycling.rank_by_year_and_name (cyclist_name, race_name, race_year, rank) values ('Lance Armstrong','Tour de france', 2005, 1);\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Insert multiple rows\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 begin batch\
+   ... insert into cycling.rank_by_year_and_name (cyclist_name, race_name, race_year, rank) values ('jerry garcia',$$gira d'italia$$,2013,7);        \
+   ... insert into cycling.rank_by_year_and_name (cyclist_name, race_name, race_year, rank) values ('terry howard',$$gira d'italia$$,2011,8);   \
+   ... insert into cycling.rank_by_year_and_name (cyclist_name, race_name, race_year, rank) values ('yves beaulieu',$$gira d'italia$$,2013,27);             \
+   ... apply batch;\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 View table\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 select * from cycling.rank_by_year_and_name;\
+\
+ 
+\f2\b \cf5 cyclist_name
+\f1\b0 \cf3     | 
+\f2\b \cf6 race_name
+\f1\b0 \cf3       | 
+\f2\b \cf6 race_year
+\f1\b0 \cf3  | 
+\f2\b \cf6 rank
+\f1\b0 \cf3 \
+-----------------+----------------+-----------+------\
+ 
+\f2\b \cf7 Lance Armstrong
+\f1\b0 \cf3  | 
+\f2\b \cf7 Tour de france
+\f1\b0 \cf3  |      
+\f2\b \cf8 2005
+\f1\b0 \cf3  |    
+\f2\b \cf8 1
+\f1\b0 \cf3 \
+    
+\f2\b \cf7 jerry garcia
+\f1\b0 \cf3  |  
+\f2\b \cf7 gira d'italia
+\f1\b0 \cf3  |      
+\f2\b \cf8 2013
+\f1\b0 \cf3  |    
+\f2\b \cf8 7
+\f1\b0 \cf3 \
+      
+\f2\b \cf7 mike trout
+\f1\b0 \cf3  |  
+\f2\b \cf7 giro d'espana
+\f1\b0 \cf3  |      
+\f2\b \cf8 2012
+\f1\b0 \cf3  |   
+\f2\b \cf8 15
+\f1\b0 \cf3 \
+    
+\f2\b \cf7 terry howard
+\f1\b0 \cf3  |  
+\f2\b \cf7 gira d'italia
+\f1\b0 \cf3  |      
+\f2\b \cf8 2011
+\f1\b0 \cf3  |    
+\f2\b \cf8 8
+\f1\b0 \cf3 \
+   
+\f2\b \cf7 josh hamilton
+\f1\b0 \cf3  |  
+\f2\b \cf7 gira d'italia
+\f1\b0 \cf3  |      
+\f2\b \cf8 2014
+\f1\b0 \cf3  |    
+\f2\b \cf8 5
+\f1\b0 \cf3 \
+   
+\f2\b \cf7 yves beaulieu
+\f1\b0 \cf3  |  
+\f2\b \cf7 gira d'italia
+\f1\b0 \cf3  |      
+\f2\b \cf8 2013
+\f1\b0 \cf3  |   
+\f2\b \cf8 27\
+\
+
+\f1\b0 \cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Create reviews DB and add a user collection\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 \
+> use reviews\
+switched to db reviews\
+> db.user.insertOne( \{\
+... name:"",\
+... email_address:""\
+... \} )\
+\{\
+	"acknowledged" : true,\
+	"insertedId" : ObjectId("5c7d61b4119640f3fef4014c")\
+\}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Add an Article collection\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 > db.article.insertOne( \{\
+... name:"",\
+... webpage:"",\
+... text:"",\
+... Author:"",\
+... publish_date: new Date()\
+... \} )\
+\{\
+	"acknowledged" : true,\
+	"insertedId" : ObjectId("5c7d629a119640f3fef4014d")\
+\}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Insert one new User
+\fs22 \
+\
+> db.user.insertOne(\{name:"movielover1", email_address:"movielover1@gmail.com"\})\
+\{\
+	"acknowledged" : true,\
+	"insertedId" : ObjectId("5c7d6600119640f3fef4014e")\
+\}\
+\
+
+\fs28 Insert many new users\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 > db.user.insertMany([\{name:"arthur",email_address:"arthur1@gmail.com"\},\{name:"beatrice",email_address:"bea1@gmail.com"\},\{name:"chris",email_address:"chris1@gmail.com"\},\
+... \{name:"derek",email_address:"derek@gmail.com"\},\{name:"eric",email_address:"eric@gmail.com"\},\{name:"flo",email_address:"flo@gmail.com"\},\
+... \{name:"gary",email_address:"gary@gmail.com"\},\{name:"holly",email_address:"holly@gmail.com"\},\{name:"igor",email_address:"igor@gmail.com"\},\
+... \{name:"jerry",email_address:"jerry@gmail.com"\}\
+... ])\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Insert many new articles\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 > db.article.insertMany([ \{name:"beauty",webpage:"bart1.com",text:"sdsdffsdf",Author:"flaubert", publish_date: new Date("1850-10-30")\}, \{name:"existentialism",webpage:"bart1.com",text:"sdsdffsdf",Author:"camus", publish_date: new Date("1940-10-30")\}, \{name:"film",webpage:"bart1.com",text:"sdsdffsdf",Author:"bazin", publish_date: new Date("1951-10-30")\}, \{name:"war",webpage:"bart1.com",text:"sdsdffsdf",Author:"sun zhu", publish_date: new Date("1900-10-30")\}, \{name:"relativity",webpage:"bart1.com",text:"sdsdffsdf",Author:"einstein", publish_date: new Date("1930-10-30")\},\{name:"DNA",webpage:"bart1.com",text:"sdsdffsdf",Author:"crick", publish_date: new Date("1950-10-30")\} ])\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Update one article and delete one article\
+\
+
+\fs24 change the date to current
+\fs28 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 > db.article.updateOne(\{name:"art1"\},\{$set:\{publish_date: Date()\}\})\
+\{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 \}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs24 Delete the article with date 10/15/89
+\fs22 \
+> db.article.deleteOne(\{publish_date:10/15/89\})\
+\{ "acknowledged" : true, "deletedCount" : 1 \}
+\fs28 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Find all drama movies from american_movies
+\fs22 \
+\
+> db.american_movies.find(\{genres: "Drama"\})\
+\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0b95"), "title" : "The Automobile Thieves", "year" : 1906, "cast" : [ "J. Stuart Blackton", "Florence Lawrence" ], "genres" : [ "Short", "Crime", "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0ba1"), "title" : "The Adventures of Dollie", "year" : 1908, "cast" : [ "Arthur V. Johnson", "Linda Arvidson" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0ba3"), "title" : "The Bandit's Waterloo", "year" : 1908, "cast" : [ "Charles Inslee", "Linda Arvidson" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0ba6"), "title" : "The Black Viper", "year" : 1908, "cast" : [ "D. W. Griffith" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0ba7"), "title" : "A Christmas Carol", "year" : 1908, "cast" : [ "Tom Ricketts" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0bc2"), "title" : "At the Altar", "year" : 1909, "cast" : [ "Marion Leonard" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0bcf"), "title" : "A Drunkard's Reformation", "year" : 1909, "cast" : [ "Arthur V. Johnson" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0bd3"), "title" : "The Golden Louis", "year" : 1909, "cast" : [ ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0bf5"), "title" : "One Touch of Nature", "year" : 1909, "cast" : [ ], "genres" : [ "Short", "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0bff"), "title" : "An Arcadian Maid", "year" : 1910, "cast" : [ "Mary Pickford", "Mack Sennett" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c00"), "title" : "As It Is In Life", "year" : 1910, "cast" : [ "George Nichols", "Gladys Egan", "Mary Pickford" ], "genres" : [ "Romance", "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c02"), "title" : "The Courtship of Miles Standish", "year" : 1910, "cast" : [ "Robert Z. Leonard" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c05"), "title" : "The Fugitive", "year" : 1910, "cast" : [ "Kate Bruce", "Edward Dillon" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c09"), "title" : "The House with Closed Shutters", "year" : 1910, "cast" : [ "Henry B. Walthall" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c0a"), "title" : "In Old California", "year" : 1910, "cast" : [ "Frank Powell", "Arthur V. Johnson", "Marion Leonard", "Henry B. Walthall" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c0b"), "title" : "In the Border States", "year" : 1910, "cast" : [ "Charles West" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c0d"), "title" : "A Lad from Old Ireland", "year" : 1910, "cast" : [ "Sidney Olcott", "Gene Gauntier", "Thomas O'Connor" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c10"), "title" : "Ramona", "year" : 1910, "cast" : [ "Mary Pickford", "Henry B. Walthall" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c11"), "title" : "The Rocky Road", "year" : 1910, "cast" : [ "Frank Powell", "Stephanie Longfellow" ], "genres" : [ "Drama" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0c14"), "title" : "The Unchanging Sea", "year" : 1910, "cast" : [ "Arthur V. Johnson" ], "genres" : [ "Drama" ] \}\
+Type "it" for more\
+\
+
+\fs28 Update the drama movies to \'93Unknown\'94
+\fs22 \
+\
+> db.american_movies.updateMany(\{genres:"Drama"\},\{$set:\{genres:"Unknown"\}\})\
+\{ "acknowledged" : true, "matchedCount" : 17488, "modifiedCount" : 17488 \}\
+\
+
+\fs28 Find all movies that start with \'93Sec\'94 in its name\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 > db.american_movies.find(\{title: \{$regex: /^Sec/\}\})\
+\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc0e27"), "title" : "Secret Love", "year" : 1916, "cast" : [ "Jack Curtis", "Helen Ware" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc10d6"), "title" : "Secret Service", "year" : 1919, "cast" : [ "Robert Warwick", "Wanda Hawley" ], "genres" : [ "War" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc13e1"), "title" : "Second Hand Rose", "year" : 1922, "cast" : [ "Gladys Walton", "George B. Williams" ], "genres" : [ "Romance" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc13e3"), "title" : "Secrets of Paris", "year" : 1922, "cast" : [ "Lew Cody", "Gladys Hulette" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc157a"), "title" : "Second Fiddle", "year" : 1923, "cast" : [ "Glenn Hunter", "Mary Astor" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc157b"), "title" : "Second Hand Love", "year" : 1923, "cast" : [ "Buck Jones", "Ruth Dwyer" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc1747"), "title" : "Second Youth", "year" : 1924, "cast" : [ "Alfred Lunt", "Lynn Fontanne" ], "genres" : [ "Comedy" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc1748"), "title" : "Secrets of the Night", "year" : 1924, "cast" : [ "James Kirkwood", "Madge Bellamy", "Zasu Pitts" ], "genres" : [ "Mystery" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc1749"), "title" : "Secrets", "year" : 1924, "cast" : [ "Norma Talmadge", "Eugene O'Brien" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc1b6c"), "title" : "Secret Orders", "year" : 1926, "cast" : [ "Robert Frazer", "Evelyn Brent" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc20bb"), "title" : "Second Wife", "year" : 1930, "cast" : [ "Conrad Nagel", "Lila Lee" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc20c0"), "title" : "Second Choice", "year" : 1930, "cast" : [ "Dolores Costello", "Chester Morris" ], "genres" : [ "Romance" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc20c1"), "title" : "Second Honeymoon", "year" : 1930, "cast" : [ "Josephine Dunn", "Bernice Elliott", "Edward Earle" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc221f"), "title" : "Secret Service", "year" : 1931, "cast" : [ "Richard Dix", "Shirley Grey" ], "genres" : [ "War" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc2223"), "title" : "Secrets of a Secretary", "year" : 1931, "cast" : [ "Claudette Colbert", "Herbert Marshall" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc239d"), "title" : "Secrets of the French Police", "year" : 1932, "cast" : [ "Gwili Andre", "Gregory Ratoff" ], "genres" : [ "Crime" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc2534"), "title" : "Second Hand Wife", "year" : 1933, "cast" : [ "Sally Eilers", "Helen Vinson", "Ralph Bellamy" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc2536"), "title" : "Secret of the Blue Room", "year" : 1933, "cast" : [ "Lionel Atwill", "Gloria Stuart" ], "genres" : [ "Mystery" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc2537"), "title" : "Secrets", "year" : 1933, "cast" : [ "Mary Pickford", "Leslie Howard" ], "genres" : [ "Western" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc26d2"), "title" : "Secret of the Chateau", "year" : 1934, "cast" : [ "Claire Dodd", "Alice White" ], "genres" : [ "Crime" ] \}\
+Type "it" for more\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Find all movies from 2017\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs22 \
+> db.american_movies.find(\{year: 2017 \})\
+\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc795e"), "title" : "Arsenal", "year" : 2017, "cast" : [ "Adrian Grenier", "Johnathon Schaech", "Nicolas Cage", "Lydia Hull", "Christopher Coppola", "Megan Leonard", "Christopher Rob Bowen", "Tyler Jon Olson", "Shea Buckner", "John Cusack" ], "genres" : [ "Action", "Crime", "Thriller" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc795f"), "title" : "Between Us", "year" : 2017, "cast" : [ "Olivia Thirlby", "Ben Feldman", "Adam Goldberg", "Analeigh Tipton", "Scott Haze", "Peter Bogdanovich", "Lesley Ann Warren" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7960"), "title" : "Monster Trucks", "year" : 2017, "cast" : [ "Lucas Till", "Jane Levy", "Amy Ryan", "Holt McCallany", "Rob Lowe", "Danny Glover", "Frank Whaley", "Chad Willett", "Barry Pepper", "Thomas Lennon", "Tucker Albrizzi" ], "genres" : [ "Animated", "Adventure", "Science Fiction" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7961"), "title" : "The Bye Bye Man", "year" : 2017, "cast" : [ "Douglas Smith", "Doug Jones", "Michael Trucco", "Cressida Bonas", "Lucien Laviscount", "Carrie-Anne Moss", "Faye Dunaway" ], "genres" : [ "Horror" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7962"), "title" : "Sleepless", "year" : 2017, "cast" : [ "Jamie Foxx", "T.I.", "Drew Sidora", "Lloyd Banks", "Gabrielle Union", "David Harbour", "Young Jeezy", "Michelle Monaghan", "Scoot McNairy", "Sala Baker" ], "genres" : [ "Action", "Thriller" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7963"), "title" : "100 Streets", "year" : 2017, "cast" : [ "Idris Elba", "Gemma Arterton", "Charlie Creed-Miles", "Franz Drameh", "Kierston Wareing", "Tom Cullen", "Ken Stott" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7965"), "title" : "The Book of Love", "year" : 2017, "cast" : [ "Jason Sudeikis", "Jessica Biel", "Maisie Williams", "Mary Steenburgen", "Orlando Jones", "Paul Reiser" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7966"), "title" : "Split", "year" : 2017, "cast" : [ "James McAvoy", "Anya Taylor-Joy", "Betty Buckley", "Jessica Sula", "Haley Lu Richardson", "Kim Director", "Lyne Ren\'e9e", "Brad William Henke", "Neal Huff", "Sebastian Arcelus" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7967"), "title" : "xXx: Return of Xander Cage", "year" : 2017, "cast" : [ "Vin Diesel", "Samuel L. Jackson", "Donnie Yen", "Deepika Padukone", "Kris Wu", "Nina Dobrev", "Tony Jaa", "Ruby Rose", "Toni Collette", "Nicky Jam", "Rory McCann", "Al Sapienza", "Michael Bisping", "Ariadna Guti\'e9rrez", "Hermione Corfield" ], "genres" : [ "Action", "Adventure" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7968"), "title" : "The Resurrection of Gavin Stone", "year" : 2017, "cast" : [ "Brett Dalton", "Anjelah Johnson", "Neil Flynn", "Shawn Michaels", "D. B. Sweeney" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7969"), "title" : "Trespass Against Us", "year" : 2017, "cast" : [ "Michael Fassbender", "Brendan Gleeson", "Lyndsey Marshal", "Killian Scott" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc796a"), "title" : "Sophie and the Rising Sun", "year" : 2017, "cast" : [ "Julianne Nicholson", "Margo Martindale", "Lorraine Toussaint", "Takashi Yamaguchi", "Diane Ladd" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc796b"), "title" : "Underworld: Blood Wars", "year" : 2017, "cast" : [ "Kate Beckinsale", "Theo James", "Tobias Menzies", "Lara Pulver", "James Faulkner", "Charles Dance" ], "genres" : [ "Action", "Horror" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc796c"), "title" : "Lost in Florence", "year" : 2017, "cast" : [ "Brett Dalton", "Stana Katic", "Alessandra Mastronardi", "Alessandro Preziosi", "Emily Atack", "Rob Aramayo", "Marco Bonini" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc796d"), "title" : "I Am Michael", "year" : 2017, "cast" : [ "James Franco", "Zachary Quinto", "Emma Roberts", "Charlie Carver" ], "genres" : "Unknown" \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc796e"), "title" : "iBoy", "year" : 2017, "cast" : [ "Bill Milner", "Maisie Williams", "Miranda Richardson", "Rory Kinnear" ], "genres" : [ "Action", "Crime" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7970"), "title" : "A Dog's Purpose", "year" : 2017, "cast" : [ "Britt Robertson", "Dennis Quaid", "Josh Gad", "Peggy Lipton", "Juliet Rylance" ], "genres" : [ "Family" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7971"), "title" : "The Space Between Us", "year" : 2017, "cast" : [ "Asa Butterfield", "Britt Robertson", "Gary Oldman", "Carla Gugino", "B. D. Wong" ], "genres" : [ "Science Fiction", "Adventure", "Romance" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7972"), "title" : "Rings", "year" : 2017, "cast" : [ "Matilda Lutz", "Alex Roe", "Johnny Galecki", "Aimee Teegarden", "Laura Wiggins", "Zach Roerig", "Vincent D'Onofrio", "Andrea Laing", "Patrick R. Walker" ], "genres" : [ "Horror", "Thriller" ] \}\
+\{ "_id" : ObjectId("5c7d5d6bc5f3d22bdbcc7973"), "title" : "Youth in Oregon", "year" : 2017, "cast" : [ "Frank Langella", "Billy Crudup", "Christina Applegate", "Nicola Peltz", "Josh Lucas", "Mary Kay Place", "Alex Shaffer" ], "genres" : "Unknown" \}\
+Type "it" for more\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\fs28 Delete all movies from 2017
+\fs22 \
+\
+BEFORE\
+> db.american_movies.count(\{year: 2017 \})\
+476\
+\
+AFTER\
+> db.american_movies.deleteMany(\{year:2017\})\
+\{ "acknowledged" : true, "deletedCount" : 476 \}}
